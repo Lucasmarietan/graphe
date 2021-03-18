@@ -1,9 +1,10 @@
 package ch.hearc.business;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 
-public class Graph {
+public class Graph implements Serializable {
     private String name;
     private HashMap<String,Node> nodeList;
 
