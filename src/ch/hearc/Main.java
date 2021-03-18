@@ -2,6 +2,7 @@ package ch.hearc;
 
 import ch.hearc.business.Graph;
 import ch.hearc.business.Node;
+import ch.hearc.utils.FileUtils;
 
 public class Main {
 
@@ -22,5 +23,7 @@ public class Main {
         // g.removeNode("x2");
         // g.removeEdge("u1");
         System.out.println(g.toString());
+
+        FileUtils.save(g, "Graphe-SNAPSHOT");
     }
 }
