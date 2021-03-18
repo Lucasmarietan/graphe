@@ -25,5 +25,8 @@ public class Main {
         System.out.println(g.toString());
 
         FileUtils.save(g, "Graphe-SNAPSHOT");
+        Graph gCOPIE = FileUtils.load("Graphe-SNAPSHOT");
+
+        System.out.println(gCOPIE.toString());
     }
 }

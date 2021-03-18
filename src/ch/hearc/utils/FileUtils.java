@@ -2,10 +2,7 @@ package ch.hearc.utils;
 
 import ch.hearc.business.Graph;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,8 +35,31 @@ public class FileUtils {
         }
     }
 
-    public static void load(){
+    public static Graph load(String filename) {
 
+        FileInputStream fis = null;
+        ObjectInputStream in = null;
+        Graph g = null;
+        try {
+            fis = new FileInputStream(new File(filename));
+            in = new ObjectInputStream(fis);
+            g = (Graph) in.readObject();
+        } catch (Exception ex) {
+            Logger.getLogger(Graph.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (in != null) {
+                    in.close();
+                }
+                if (fis != null) {
+                    fis.close();
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(Graph.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        return g;
     }
 }
 
