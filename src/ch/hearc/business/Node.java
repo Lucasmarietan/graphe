@@ -50,6 +50,17 @@ public class Node implements Serializable {
         return i;
     }
 
+    @Override
+    public String toString() {
+        return "Node{" +
+                "name='" + name + '\'' +
+                ", outEdges=" + outEdges +
+                ", degreeIn=" + degreeIn +
+                ", degreeOut=" + degreeOut +
+                ", discovered=" + discovered +
+                ", level=" + level +
+                '}';
+    }
 
     /**
      * Getter / Setter

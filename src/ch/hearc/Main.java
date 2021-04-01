@@ -1,9 +1,6 @@
 package ch.hearc;
 
-import ch.hearc.business.Graph;
-import ch.hearc.business.Node;
-import ch.hearc.business.Person;
-import ch.hearc.business.Receipt;
+import ch.hearc.business.*;
 import ch.hearc.utils.FileUtils;
 
 public class Main {
@@ -54,6 +51,7 @@ public class Main {
         jain.cook("b1", ravioli, 10);
 
         System.out.println(graphFriendship.navigateWidth(jain));
+        System.out.println(graphFriendship.navigateWidthLevelClass(jain, 1, Cook.class));
 
         System.out.println(graphFriendship.toString());
 

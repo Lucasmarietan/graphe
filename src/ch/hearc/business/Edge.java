@@ -16,6 +16,15 @@ public class Edge implements Serializable {
         this.dest = dest;
     }
 
+    @Override
+    public String toString() {
+        return "Edge{" +
+                "name='" + name + '\'' +
+                ", metric=" + metric +
+                ", dest=" + dest +
+                '}';
+    }
+
     /**
      * Getter / Setter
      */

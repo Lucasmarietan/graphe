@@ -32,13 +32,6 @@ public class Person extends Node {
     }
 
 
-    @Override
-    public String toString() {
-        return "Person{" +
-                "name='" + name + '\'' +
-                ", city='" + city + '\'' +
-                '}';
-    }
 
     /**
      * Getter/Setter

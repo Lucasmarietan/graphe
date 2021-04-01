@@ -98,7 +98,7 @@ public class Graph implements Serializable {
     }
 
     // Navigation en largeur mais avec une limitation de niveau
-    public List<Node> navigateWidth(Node startNode, int levelMax) {
+    public List<Node> navigateWidthLevel(Node startNode, int levelMax) {
         reInit();
         List<Node> result = new LinkedList<>();
         LinkedList<Node> file = new LinkedList<>();
@@ -114,6 +114,32 @@ public class Graph implements Serializable {
                     if (!destinationNode.isDiscovered()) {
                         file.addFirst(destinationNode);
                         destinationNode.setDiscovered(true);
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    // Navigation en largeur mais avec une limitation de niveau
+    public List<Node> navigateWidthLevelClass(Node startNode, int maxLevel, Class edgeType) {
+        reInit();
+        List<Node> result = new LinkedList<>();
+        Stack<Node> stack = new Stack<>();
+        stack.push(startNode);
+        startNode.setDiscovered(true);
+        while(!stack.isEmpty()) {
+            Node currentNode = stack.pop();
+            result.add(currentNode);
+            if (currentNode.getLevel() < maxLevel) {
+                for (Edge edge : currentNode.getOutEdges().values()) {
+                    if(edge.getClass() == edgeType) {
+                        Node destinationNode = edge.getDest();
+                        if (!destinationNode.isDiscovered()) {
+                            stack.push(destinationNode);
+                            destinationNode.setDiscovered(true);
+                            destinationNode.setLevel(currentNode.getLevel()+1);
+                        }
                     }
                 }
             }
