@@ -38,6 +38,10 @@ public class Node implements Serializable {
         outEdges.putIfAbsent(edgeName, new Edge(edgeName, dest, metric));
     }
 
+    public void addEdge(Edge edge) {
+        outEdges.putIfAbsent(edge.getName(), edge);
+    }
+
     public int computeOutEdges() {
         int i = 0;
         for (Edge e : this.outEdges.values()) {
