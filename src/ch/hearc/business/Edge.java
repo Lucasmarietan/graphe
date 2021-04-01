@@ -7,12 +7,18 @@ public class Edge implements Serializable {
     private double metric;
     private Node dest;
 
+    /**
+     * Constructeur
+     */
     public Edge(String name, Node dest, double metric) {
         this.name = name;
         this.metric = metric;
         this.dest = dest;
     }
 
+    /**
+     * Getter / Setter
+     */
     public String getName() {
         return name;
     }
