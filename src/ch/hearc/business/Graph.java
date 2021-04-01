@@ -11,10 +11,17 @@ public class Graph implements Serializable {
     private String name;
     private HashMap<String,Node> nodeList;
 
+    /**
+    * CONSTRUCTEUR
+     */
     public Graph(String name){
         nodeList = new HashMap<>();
         this.name = name;
     }
+
+    /**
+     * Fonctions
+     */
 
     public void addNode(Node n){
         nodeList.putIfAbsent(n.getName(), n);
@@ -31,10 +38,6 @@ public class Graph implements Serializable {
             sb.append("W++(" + n.getName() + ") = { " + n.wPlus() +"}\n");
         }
         return sb.toString();
-    }
-
-    public Node getNode(String nodeName){
-        return this.nodeList.get(nodeName);
     }
 
     public void addEdge(String srcNodeName, String destNodeName, String edgeName, double metric){
@@ -73,6 +76,7 @@ public class Graph implements Serializable {
         }
     }
 
+    // Navigation en largeur : On part d'un noeud, on explore tout ses voisins et ainsi de suite
     public List<Node> navigateWidth(Node startNode) {
         reInit();
         List<Node> result = new LinkedList<>();
@@ -93,6 +97,31 @@ public class Graph implements Serializable {
         return result;
     }
 
+    // Navigation en largeur mais avec une limitation de niveau
+    public List<Node> navigateWidth(Node startNode, int levelMax) {
+        reInit();
+        List<Node> result = new LinkedList<>();
+        LinkedList<Node> file = new LinkedList<>();
+        file.addFirst(startNode);
+        startNode.setDiscovered(true);
+        startNode.setLevel(0);
+        while(!file.isEmpty()) {
+            Node currentNode = file.removeLast();
+            result.add(currentNode);
+            if (currentNode.getLevel() < levelMax) {
+                for (Edge edge : currentNode.getOutEdges().values()) {
+                    Node destinationNode = edge.getDest();
+                    if (!destinationNode.isDiscovered()) {
+                        file.addFirst(destinationNode);
+                        destinationNode.setDiscovered(true);
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+
     public List<Node> navigateDepth(Node startNode) {
         reInit();
         List<Node> result = new LinkedList<>();
@@ -112,4 +141,13 @@ public class Graph implements Serializable {
         }
         return result;
     }
+
+    /**
+     * Getter / Setter
+     */
+
+    public Node getNode(String nodeName){
+        return this.nodeList.get(nodeName);
+    }
+
 }

@@ -9,33 +9,22 @@ public class Node implements Serializable {
     private HashMap<String, Edge> outEdges;
     private int degreeIn;
     private int degreeOut;
-    private boolean discovered;
-
-    public void setDegreeIn(int degreeIn) {
-        this.degreeIn = degreeIn;
-    }
-
-    public int getDegreeIn() {
-        return degreeIn;
-    }
-
-    public void setDegreeOut(int degreeOut) {
-        this.degreeOut = degreeOut;
-    }
-
-    public String getName() {
-        return name;
-    }
+    private boolean discovered; // Marquage comme quoi on est passé dessus
+    private int level;
 
 
+    /**
+     * Constructeur
+     */
     public Node(String name){
         this.name = name;
         outEdges = new HashMap<String, Edge>();
     }
 
-    public HashMap<String, Edge> getOutEdges() {
-        return outEdges;
-    }
+
+    /**
+     * Fonctions
+     */
 
     public String wPlus(){
         StringBuilder sb = new StringBuilder();
@@ -57,6 +46,35 @@ public class Node implements Serializable {
         return i;
     }
 
+
+    /**
+     * Getter / Setter
+     */
+
+    public void setDegreeIn(int degreeIn) {
+        this.degreeIn = degreeIn;
+    }
+
+    public int getDegreeIn() {
+        return degreeIn;
+    }
+
+    public void setDegreeOut(int degreeOut) {
+        this.degreeOut = degreeOut;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
     public boolean isDiscovered() {
         return discovered;
     }
@@ -64,6 +82,11 @@ public class Node implements Serializable {
     public void setDiscovered(boolean discovered) {
         this.discovered = discovered;
     }
+
+    public HashMap<String, Edge> getOutEdges() {
+        return outEdges;
+    }
+
 
 
 }
