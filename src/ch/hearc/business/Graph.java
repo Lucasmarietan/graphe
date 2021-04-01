@@ -2,6 +2,9 @@ package ch.hearc.business;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Stack;
 
 
 public class Graph implements Serializable {
@@ -51,5 +54,62 @@ public class Graph implements Serializable {
         for (Node n : this.nodeList.values()){
             n.getOutEdges ().entrySet ().removeIf (e -> e.getValue ().getName ().equalsIgnoreCase (edgeName));
         }
+    }
+
+    public void reInit(){
+        for (Node n : nodeList.values()){
+            n.setDegreeIn(0);
+            n.setDegreeOut(0);
+        }
+    }
+
+    public void computeDegree(){
+        reInit();
+        for (Node n : nodeList.values()){
+            n.computeOutEdges();
+            for (Edge e : n.getOutEdges().values()){
+                e.getDest().setDegreeIn(n.getDegreeIn()+1);
+            }
+        }
+    }
+
+    public List<Node> navigateWidth(Node startNode) {
+        reInit();
+        List<Node> result = new LinkedList<>();
+        LinkedList<Node> file = new LinkedList<>();
+        file.addFirst(startNode);
+        startNode.setDiscovered(true);
+        while(!file.isEmpty()) {
+            Node currentNode = file.removeLast();
+            result.add(currentNode);
+            for (Edge edge : currentNode.getOutEdges().values()) {
+                Node destinationNode = edge.getDest();
+                if (!destinationNode.isDiscovered()) {
+                    file.addFirst(destinationNode);
+                    destinationNode.setDiscovered(true);
+                }
+            }
+        }
+        return result;
+    }
+
+    public List<Node> navigateDepth(Node startNode) {
+        reInit();
+        List<Node> result = new LinkedList<>();
+        Stack<Node> stack = new Stack<>();
+        stack.push(startNode);
+        startNode.setDiscovered(true);
+        while(!stack.isEmpty()) {
+            Node currentNode = stack.pop();
+            result.add(currentNode);
+            for (Edge edge : currentNode.getOutEdges().values()) {
+                Node destinationNode = edge.getDest();
+                if (!destinationNode.isDiscovered()) {
+                    stack.push(destinationNode);
+                    destinationNode.setDiscovered(true);
+                }
+            }
+        }
+        return result;
     }
 }
