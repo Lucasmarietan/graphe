@@ -31,6 +31,11 @@ public class Person extends Node {
         this.addEdge(new Cook(edgeName, dest, metric));
     }
 
+    //  Relation de cuisine
+    public void watch(String edgeName, WebSite dest, double metric){
+        this.addEdge(new Watch(edgeName, dest, metric));
+    }
+
 
 
     /**
