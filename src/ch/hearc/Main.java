@@ -80,7 +80,7 @@ public class Main {
         grapheL.addNode(netflix);
         grapheL.addNode(disney);
         grapheL.addNode(apv);
-        System.out.println("test type " + jean.getClass());
+//        System.out.println("test type " + jean.getClass());
 
 
         jean.addFriend("a1", alfred, 25);
@@ -98,9 +98,39 @@ public class Main {
         paul.watch("r6", apv, 20);
         paul.watch("r7", netflix, 20);
 
+        System.out.println("\n Question 1 : Lister tous les sites de streaming regardés par Paul ");
         for (Node node : grapheL.navigateWidthLevelClass(paul, 1, Watch.class)){
             System.out.println(node.getName());
         }
+
+
+        System.out.println("\n Question 2 :  Donner tous les amis de Paul jusqu’au 2e niveau qui regardent un site de streaming ");
+        // ca marche pas ntm stéphane
+        for (Node n : grapheL.navigateWidthLevelClass(paul, 2, IsFriend.class)) {
+            if (grapheL.navigateWidthLevelClass(n, 2, Watch.class).size() > 1) {
+                System.out.println(n.getName());
+            }
+        }
+
+        System.out.println("\n Question 3 : Lister tous les amis (1er niveau) de Paul qui habitent à NE et qui regardent Amazon Prime Video");
+        for (Node n : grapheL.navigateWidthLevelClass(paul, 1, IsFriend.class)) {
+            Person p = (Person) n;
+            if (p.getCity().equals("Neuchâtel")) {
+                if (grapheL.navigateWidthLevelClass(n, 1, Watch.class).contains(apv)) {
+                   System.out.println(n.getName());
+                }
+            }
+        }
+//        Question 3 V2
+//        System.out.println("Amis de 1er niveau de Paul qui regardent Amazon Prime Video");
+//        for (Node n : socialNetworkExtended.navigateWidthWithLevelAndType(paul, 1, Friendship.class)) {
+//            Person p = (Person) n;
+//            if (p.getCity().equals("Neuchâtel")) {
+//                if (socialNetworkExtended.navigateWidthWithLevelAndType(n, 1, Watching.class).contains(socialNetworkExtended.getNode("Amazon Prime Video"))) {
+//                    System.out.println(n.getName());
+//                }
+//            }
+//        }
 
 
     }
