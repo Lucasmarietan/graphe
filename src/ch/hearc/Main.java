@@ -98,7 +98,10 @@ public class Main {
         paul.watch("r6", apv, 20);
         paul.watch("r7", netflix, 20);
 
-        System.out.println(grapheL.navigateWidthLevelClass(paul, 1, netflix.getClass()));
+        for (Node node : grapheL.navigateWidthLevelClass(paul, 1, Watch.class)){
+            System.out.println(node.getName());
+        }
+
 
     }
 }
