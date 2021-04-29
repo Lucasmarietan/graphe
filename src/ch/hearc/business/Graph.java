@@ -1,10 +1,7 @@
 package ch.hearc.business;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 
 public class Graph implements Serializable {
@@ -40,7 +37,7 @@ public class Graph implements Serializable {
         return sb.toString();
     }
 
-    public void addEdge(String srcNodeName, String destNodeName, String edgeName, double metric){
+    public void addEdge(String srcNodeName, String destNodeName, String edgeName, int metric){
         nodeList.putIfAbsent(srcNodeName, new Node(srcNodeName));
         nodeList.putIfAbsent(destNodeName, new Node(destNodeName));
         this.getNode(srcNodeName).addEdge(edgeName, this.getNode(destNodeName), metric);
@@ -174,6 +171,76 @@ public class Graph implements Serializable {
 
     public Node getNode(String nodeName){
         return this.nodeList.get(nodeName);
+    }
+
+    private void dijkstra(Node startNode) {
+        startNode.setDijkstraWeight(0);
+        List<Node> priorityList = new ArrayList<>();
+        Node currentNode;
+        Node destinationNode;
+        Edge tmpEdge;
+        int currentWeight;
+        priorityList.add(startNode);
+
+        while (!priorityList.isEmpty()){
+            Collections.sort(priorityList, new DijkstraNodeComparator());
+            currentNode = (Node) priorityList.remove(0);
+            String pred = currentNode.getDijkstraPredecessor() == null ? "" : currentNode.getName();
+            System.out.println(currentNode + " / " + currentNode.getDijkstraWeight() + " / " + currentNode.getDijkstraPredecessor());
+            startNode.getRoutingTable().put(currentNode.getName(), new TripletDijkstra(currentNode.getName(), pred, currentNode.getDijkstraWeight()));
+
+            for (Iterator ita = currentNode.getOutEdges().values().iterator(); ita.hasNext();) {
+                tmpEdge = (Edge) ita.next();
+                destinationNode = tmpEdge.getDest();
+                currentWeight = currentNode.getDijkstraWeight() + tmpEdge.getMetric();
+
+                if (destinationNode.getDijkstraWeight() == Integer.MAX_VALUE); {
+                    priorityList.add(destinationNode);
+                }
+                if(currentWeight < destinationNode.getDijkstraWeight()){
+                    destinationNode.setDijkstraWeight(currentWeight);
+                    destinationNode.setDijkstraPredecessor(currentNode);
+                }
+
+            }
+        }
+    }
+
+    public String shortestPathToString(String srcNodeName, String destNodeName) {
+        Node src= this.getNode(srcNodeName);
+        Node dest = this.getNode(destNodeName);
+
+        System.out.println("Plus court chemin entre " + src.getName() + " et " + dest.getName());
+
+        if(src.getRoutingTable() == null ) {
+            src.setRoutingTable(new HashMap<>());
+            dijkstra(src);
+        }
+
+        TripletDijkstra currentTriplet = src.getRoutingTable().get(destNodeName);
+
+        if (currentTriplet == null) {
+            System.out.println("Pas de chemin entre "+ src.getName() + " et " + dest.getName());
+        } else {
+            System.out.println("Le coût du trajet est de "+ currentTriplet.getDijkstraWeight());
+        }
+
+        LinkedList<TripletDijkstra> path = new LinkedList<TripletDijkstra>();
+
+        while (currentTriplet != null) {
+            path.addFirst(currentTriplet);
+            currentTriplet = src.getRoutingTable().get(currentTriplet.getPredecessorNodeName());
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Les étapes sont : ");
+        for (TripletDijkstra step : path) {
+            sb.append("       ").append(step.getNodeName());
+        }
+        sb.append("\n");
+
+        return sb.toString();
+
     }
 
 }

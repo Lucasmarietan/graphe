@@ -21,18 +21,18 @@ public class Person extends Node {
      * Fonctions
      */
 
-    public void addFriend(String edgeName, Person dest, double metric){
+    public void addFriend(String edgeName, Person dest, int metric){
         // la metric peut signifier le nombre de jours d'amitié ou ce qu'on veut
         this.addEdge(new IsFriend(edgeName, dest, metric));
     }
 
  //  Relation de cuisine
-    public void cook(String edgeName, Receipt dest, double metric){
+    public void cook(String edgeName, Receipt dest, int metric){
         this.addEdge(new Cook(edgeName, dest, metric));
     }
 
     //  Relation de cuisine
-    public void watch(String edgeName, WebSite dest, double metric){
+    public void watch(String edgeName, WebSite dest, int metric){
         this.addEdge(new Watch(edgeName, dest, metric));
     }
 

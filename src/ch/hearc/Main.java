@@ -120,17 +120,18 @@ public class Main {
                    System.out.println(n.getName());
                 }
             }
-        }
-//        Question 3 V2
-//        System.out.println("Amis de 1er niveau de Paul qui regardent Amazon Prime Video");
-//        for (Node n : socialNetworkExtended.navigateWidthWithLevelAndType(paul, 1, Friendship.class)) {
-//            Person p = (Person) n;
-//            if (p.getCity().equals("Neuchâtel")) {
-//                if (socialNetworkExtended.navigateWidthWithLevelAndType(n, 1, Watching.class).contains(socialNetworkExtended.getNode("Amazon Prime Video"))) {
-//                    System.out.println(n.getName());
-//                }
-//            }
-//        }
+        }/*
+        //Question 3 V2
+        System.out.println("Amis de 1er niveau de Paul qui regardent Amazon Prime Video");
+        for (Node n : grapheL.navigateWidthWithLevelAndType(paul, 1, Friendship.class)) {
+            Person p = (Person) n;
+            if (p.getCity().equals("Neuchâtel")) {
+                if (grapheL.navigateWidthWithLevelAndType(n, 1, Watching.class).contains(grapheL.getNode("Amazon Prime Video"))) {
+                   System.out.println(n.getName());
+                }
+            }
+        }*/
+        System.out.println(grapheL.shortestPathToString(albert.getName(), paul.getName()));
 
 
     }

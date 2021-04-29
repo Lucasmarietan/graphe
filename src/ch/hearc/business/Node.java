@@ -2,6 +2,7 @@ package ch.hearc.business;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Map;
 
 
 public class Node implements Serializable {
@@ -11,6 +12,33 @@ public class Node implements Serializable {
     private int degreeOut;
     private boolean discovered; // Marquage comme quoi on est passé dessus
     private int level;
+    private int dijkstraWeight = 0;
+    private Node dijkstraPredecessor = null;
+    private Map<String, TripletDijkstra> routingTable;
+
+    public int getDijkstraWeight() {
+        return dijkstraWeight;
+    }
+
+    public void setDijkstraWeight(int dijkstraWeight) {
+        this.dijkstraWeight = dijkstraWeight;
+    }
+
+    public Node getDijkstraPredecessor() {
+        return dijkstraPredecessor;
+    }
+
+    public void setDijkstraPredecessor(Node dijkstraPredecessor) {
+        this.dijkstraPredecessor = dijkstraPredecessor;
+    }
+
+    public Map<String, TripletDijkstra> getRoutingTable() {
+        return routingTable;
+    }
+
+    public void setRoutingTable(Map<String, TripletDijkstra> routingTable) {
+        this.routingTable = routingTable;
+    }
 
 
     /**
@@ -34,7 +62,7 @@ public class Node implements Serializable {
         return sb.toString();
     }
 
-    public void addEdge(String edgeName, Node dest, double metric) {
+    public void addEdge(String edgeName, Node dest, int metric) {
         outEdges.putIfAbsent(edgeName, new Edge(edgeName, dest, metric));
     }
 
